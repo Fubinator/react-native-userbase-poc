@@ -11,7 +11,7 @@ const App = () => {
         await initialize();
 
         const session = await userbase.init({
-          appId: 'fe8bee16-a060-49e9-b0f2-793471e3e3bf',
+          appId: '',
         });
         console.log('SESSION:', session);
 
