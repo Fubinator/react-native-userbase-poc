@@ -1,0 +1,26 @@
+diff --git a/node_modules/userbase-js/dist/userbase.cjs.js b/node_modules/userbase-js/dist/userbase.cjs.js
+index 7b2b33f..66ce6fd 100644
+--- a/node_modules/userbase-js/dist/userbase.cjs.js
++++ b/node_modules/userbase-js/dist/userbase.cjs.js
+@@ -2263,7 +2263,7 @@ const hexStringToArrayBuffer = hexString => {
+ 
+ const BYTE_SIZE = 32; // 256 / 8
+ 
+-const HASH_ALGORITHM_NAME = 'SHA-256';
++const HASH_ALGORITHM_NAME = 'sha-256';
+ /**
+  *
+  * @param {ArrayBuffer} data
+diff --git a/node_modules/userbase-js/lib/Crypto/sha-256.js b/node_modules/userbase-js/lib/Crypto/sha-256.js
+index 007a390..60a8168 100644
+--- a/node_modules/userbase-js/lib/Crypto/sha-256.js
++++ b/node_modules/userbase-js/lib/Crypto/sha-256.js
+@@ -2,7 +2,7 @@ import base64 from 'base64-arraybuffer';
+ import { stringToArrayBuffer } from './utils';
+ const BYTE_SIZE = 32; // 256 / 8
+ 
+-const HASH_ALGORITHM_NAME = 'SHA-256';
++const HASH_ALGORITHM_NAME = 'sha-256';
+ /**
+  *
+  * @param {ArrayBuffer} data
