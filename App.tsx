@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import userbase from 'userbase-js';
 import initialize from './userbase';
+import config from './config';
 
 import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 
@@ -11,13 +12,13 @@ const App = () => {
         await initialize();
 
         const session = await userbase.init({
-          appId: '',
+          appId: config.USERBASE_APP_ID,
         });
         console.log('SESSION:', session);
 
         const user = await userbase.signIn({
-          username: 'fk',
-          password: 'Abcd1234!',
+          username: config.USERBASE_USERNAME,
+          password: config.USERBASE_PASSWORD,
         });
 
         console.log('USER: ', user);
