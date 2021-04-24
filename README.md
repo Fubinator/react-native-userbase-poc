@@ -10,5 +10,5 @@ The biggest problem is that React Native does not support the Web Crypto API. Ho
 
 1. Clone this repository
 2. Install dependencies by running `yarn`
-3. Enter your app credentials in the `App.tsx` file.
+3. Copy the `config.example.ts` file to `config.ts` and fill it with your credentials
 4. Run the app
