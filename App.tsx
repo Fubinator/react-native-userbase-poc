@@ -16,12 +16,15 @@ const App = () => {
         });
         console.log('SESSION:', session);
 
-        const user = await userbase.signIn({
-          username: config.USERBASE_USERNAME,
-          password: config.USERBASE_PASSWORD,
-        });
+        if (!session.user) {
+          const user = await userbase.signIn({
+            username: config.USERBASE_USERNAME,
+            password: config.USERBASE_PASSWORD,
+            rememberMe: 'local',
+          });
 
-        console.log('USER: ', user);
+          console.log('USER: ', user);
+        }
       } catch (error) {
         console.log(error);
       }
