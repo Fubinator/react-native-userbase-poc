@@ -3,6 +3,7 @@ import './shim.js';
 import getRandomValues from 'react-native-get-random-values';
 const {Crypto} = require('@peculiar/webcrypto');
 import localStorage from 'react-native-sync-localstorage';
+import {Blob, File} from 'react-native';
 
 export default async function initialize(): Promise<void> {
   // crypto
@@ -35,4 +36,7 @@ export default async function initialize(): Promise<void> {
 
   // DOMException
   global.DOMException = require('domexception');
+
+  global.Blob = Blob;
+  global.File = File;
 }

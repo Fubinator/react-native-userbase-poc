@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, ScrollView, View, StyleSheet, Text} from 'react-native';
+import {Button, ScrollView, View, StyleSheet, Text, File} from 'react-native';
 import userbase, {Database, Item, Session} from 'userbase-js';
 import config from './config';
 
@@ -111,6 +111,34 @@ const UserbaseTestButtons = () => {
     });
   }
 
+  async function uploadFile() {
+    if (!items.length) {
+      return;
+    }
+    const file = new File(['foo'], 'foo.txt', {
+      type: 'text/plain',
+    });
+
+    await userbase.uploadFile({
+      databaseName: databases[0]?.databaseName || 'poc-test-db',
+      itemId: items[0].itemId,
+      file,
+    });
+  }
+
+  // This does not work yet. See: #17
+  async function getFile() {
+    if (!items.length || !items[0].fileId) {
+      return;
+    }
+
+    const fileResult = await userbase.getFile({
+      databaseName: databases[0]?.databaseName || 'poc-test-db',
+      fileId: items[0].fileId,
+    });
+    console.log(fileResult);
+  }
+
   return (
     <ScrollView>
       {session.user && (
@@ -143,8 +171,8 @@ const UserbaseTestButtons = () => {
       <Button title="put Transaction" onPress={putTransaction} />
 
       <Text style={styles.header}>File Storage</Text>
-      <Button title="upload File" onPress={() => null} />
-      <Button title="get File" onPress={() => null} />
+      <Button title="upload File" onPress={uploadFile} />
+      <Button title="get File" onPress={getFile} />
 
       <Text style={styles.header}>Data Sharing</Text>
       <Button title="share Database" onPress={() => null} />
