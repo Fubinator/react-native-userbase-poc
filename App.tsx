@@ -25,6 +25,10 @@ const App = () => {
 
           console.log('USER: ', user);
         }
+
+        const dbs = await userbase.getDatabases();
+
+        console.log('DB OPEN', dbs);
       } catch (error) {
         console.log(error);
       }
