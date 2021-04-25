@@ -1,0 +1,78 @@
+diff --git a/node_modules/react-native/Libraries/Blob/FileReader.js b/node_modules/react-native/Libraries/Blob/FileReader.js
+index 15a8b44..5a47924 100644
+--- a/node_modules/react-native/Libraries/Blob/FileReader.js
++++ b/node_modules/react-native/Libraries/Blob/FileReader.js
+@@ -12,6 +12,7 @@
+ 
+ const Blob = require('./Blob');
+ const EventTarget = require('event-target-shim');
++const { toByteArray } = require('base64-js');
+ 
+ import NativeFileReaderModule from './NativeFileReaderModule';
+ 
+@@ -81,8 +82,35 @@ class FileReader extends (EventTarget(...READER_EVENTS): any) {
+     }
+   }
+ 
+-  readAsArrayBuffer() {
+-    throw new Error('FileReader.readAsArrayBuffer is not implemented');
++  readAsArrayBuffer(blob: ?Blob) {
++    this._aborted = false;
++
++    if (blob == null) {
++      throw new TypeError(
++        "Failed to execute 'readAsArrayBuffer' on 'FileReader': parameter 1 is not of type 'Blob'",
++      );
++    }
++
++    NativeFileReaderModule.readAsDataURL(blob.data).then(
++      (text: string) => {
++        if (this._aborted) {
++          return;
++        }
++
++        const base64 = text.split(',')[1];
++        const typedArray = toByteArray(base64);
++
++        this._result = typedArray.buffer;
++        this._setReadyState(DONE);
++      },
++      error => {
++        if (this._aborted) {
++          return;
++        }
++        this._error = error;
++        this._setReadyState(DONE);
++      },
++    );
+   }
+ 
+   readAsDataURL(blob: ?Blob) {
+diff --git a/node_modules/react-native/index.js b/node_modules/react-native/index.js
+index 65ee685..783c944 100644
+--- a/node_modules/react-native/index.js
++++ b/node_modules/react-native/index.js
+@@ -10,6 +10,10 @@
+ 
+ 'use strict';
+ 
++// file API
++import typeof File from "./Libraries/Blob/File"
++import typeof Blob from "./Libraries/Blob/Blob"
++
+ // Components
+ import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
+ import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
+@@ -115,6 +119,12 @@ const invariant = require('invariant');
+ const warnOnce = require('./Libraries/Utilities/warnOnce');
+ 
+ module.exports = {
++  get File(): File {
++    return require("./Libraries/Blob/File")
++  },
++  get Blob(): Blob {
++    return require("./Libraries/Blob/Blob")
++  },
+   // Components
+   get AccessibilityInfo(): AccessibilityInfo {
+     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo');
