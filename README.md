@@ -1,10 +1,12 @@
 # react-native-userbase-poc
 
-This repository has been created to get [userbase](http://userbase.com) running in react native. After trying several things, it will be possible to get it working. For reference, take a look at [this issue](https://github.com/smallbets/userbase/issues/275).
+This project has been created to get [Userbase](http://userbase.com) running in React Native. For reference, take a look at [this issue](https://github.com/smallbets/userbase/issues/275).
 
-## The plan
+DISCLAIMER: Do not use this for real projects (yet).
 
-The biggest problem is that React Native does not support the Web Crypto API. However, we can polyfill this using [@peculiar/webcrypto](https://github.com/PeculiarVentures/webcrypto) and [rn-nodeify](https://github.com/tradle/rn-nodeify).
+## How it works
+
+This project is heavily inspired by [userbase-js-node](https://github.com/smallbets/userbase/tree/master/src/userbase-js-node). Just like Node, React Native does not support some common Web APIs that Userbase is built on. Therefore, in order to use Userbase in React Native, we polyfill all the missing APIs.
 
 ## Try it yourself
 
